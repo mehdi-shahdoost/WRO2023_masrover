@@ -1,0 +1,24 @@
+//////Alernative commands for wiring pi/////
+
+sudo apt-get purge wiringpi
+
+hash -r
+
+sudo apt-get install git-core
+
+sudo apt-get update
+
+sudo apt-get upgrade
+
+cd
+
+git clone https://github.com/wiringpi/wiringpi
+
+
+cd ~/wiringPi
+
+git pull origin
+
+cd ~/wiringPi
+
+./build
