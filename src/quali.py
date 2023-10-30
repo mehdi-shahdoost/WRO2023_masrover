@@ -18,7 +18,7 @@ camera = PiCamera()
 camera.rotation = 180
 camera.resolution = (640, 480)
 camera.framerate = 32
-# in mohemme bayad tanzim koniiid !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 camera.brightness = 50
 rawCapture = PiRGBArray(camera)
 # allow the camera to warmup
@@ -126,7 +126,7 @@ for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=
 
     speed(100)
     c = color()
-    # mohemmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm@@@@@@@@@@@1!!!!!!!!!!!!!
+    
     if c <65 and lr == 0:
         lr = -1
         print(-1)
