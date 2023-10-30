@@ -5,18 +5,21 @@ from picamera.array import PiRGBArray
 from picamera import PiCamera
 import time
 
-
+#define tcs3200 pins
 s0 = 15
 s1 = 14
 s2 = 3
 s3 = 2
 signal = 17
+#tcs3200 reading cycles
 NUM_CYCLES = 30
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
 camera.rotation = 180
 camera.resolution = (640, 480)
 camera.framerate = 32
+# in mohemme bayad tanzim koniiid !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+camera.brightness = 50
 rawCapture = PiRGBArray(camera)
 # allow the camera to warmup
 time.sleep(0.1)
@@ -35,7 +38,6 @@ GPIO.setup(servo_pwm,GPIO.OUT)
 s = GPIO.PWM(servo_pwm,50)
 s.start(0)
 GPIO.setup(button,GPIO.IN)
-sensor = 14
 
 GPIO.setup(signal,GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(s0,GPIO.OUT)
@@ -88,13 +90,14 @@ for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=
     
    
     full_thresh = cv2.threshold(imageFrame,60,255, cv2.THRESH_BINARY_INV)[1]
-    full_thresh = full_thresh[100:,:]
-    left_thresh = full_thresh[:,:270]
+   
+    full_thresh = full_thresh[100: , :]
+    left_thresh = full_thresh[:,:370]
     right_thresh = full_thresh[:,370:640]
     center_thresh = full_thresh[:,160:480]
     
-    #cv2.imshow("Multiple Color Detection in Real-TIme", full_thresh)
-    
+    cv2.imshow("Multiple Color Detection in Real-TIme", full_thresh)
+                            
     cnts_l = cv2.findContours(left_thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     cnts_l = cnts_l[0] if len(cnts_l) == 2 else cnts_l[1]
 
@@ -123,27 +126,27 @@ for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=
 
     speed(100)
     c = color()
-    
+    # mohemmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm@@@@@@@@@@@1!!!!!!!!!!!!!
     if c <65 and lr == 0:
         lr = -1
         print(-1)
     elif c<77 and lr == 0:
         lr = 1
         print(1)
+
     if c < 77 and time.time() - last_check >= 5:
         r +=1
         last_check = time.time()
         if r == 12:
             last_stop = time.time()
             r = 13
-        if r == 13 and time.time()-last_stop >= 8:
-            speed(0)
-            servo(0)
-            break
+    if r == 13 and time.time()-last_stop >= 8:
+        speed(0)
+        servo(0)
+        break
+    
     
     rawCapture.truncate(0)
-
-
     if cv2.waitKey(10) & 0xFF == ord('q'):
         webcam.release()
         cv2.destroyAllWindows()
