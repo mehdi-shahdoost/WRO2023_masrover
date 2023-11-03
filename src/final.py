@@ -36,7 +36,7 @@ GPIO.setup(servo_pwm,GPIO.OUT)
 s = GPIO.PWM(servo_pwm,50)
 s.start(0)
 GPIO.setup(button,GPIO.IN)
-sensor = 14
+
 
 GPIO.setup(signal,GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(s0,GPIO.OUT)
@@ -81,7 +81,7 @@ while GPIO.input(button) == 0:
     speed(0)
     servo(0)
 
-lr = -1
+lr = 0
 r = 0
 last_check = time.time()
 start_time = time.time()
